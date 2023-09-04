@@ -1,7 +1,6 @@
 package com.driver.services;
 
 
-import com.driver.model.Subscription;
 import com.driver.model.SubscriptionType;
 import com.driver.model.User;
 import com.driver.model.WebSeries;
@@ -25,7 +24,7 @@ public class UserService {
     public Integer addUser(User user){
 
         //Jut simply add the user to the Db and return the userId returned by the repository
-        return null;
+        return userRepository.save(user).getId();
     }
 
     public Integer getAvailableCountOfWebSeriesViewable(Integer userId){
@@ -34,8 +33,32 @@ public class UserService {
         //Hint: Take out all the Webseries from the WebRepository
 
 
-        return null;
+        User user = userRepository.findById(userId).get();
+
+        if(user == null) return 0;
+
+        int cnt=0;
+        int agelimit = user.getAge();
+        SubscriptionType type = user.getSubscription().getSubscriptionType();
+
+        List<WebSeries> webSeries = webSeriesRepository.findAll();
+
+        if(type==SubscriptionType.BASIC) {
+            for (WebSeries webseries : webSeries) {
+                if (webseries.getAgeLimit() <= agelimit && webseries.getSubscriptionType() == SubscriptionType.BASIC)
+                    cnt++;
+            }
+        }
+        else if(type == SubscriptionType.PRO){
+            for (WebSeries webseries : webSeries) {
+                if (webseries.getAgeLimit() <= agelimit &&
+                        (webseries.getSubscriptionType() == SubscriptionType.BASIC ||
+                                webseries.getSubscriptionType()==SubscriptionType.PRO))
+                    cnt++;
+            }
+        }
+
+        else cnt=webSeries.size();
+        return cnt;
     }
-
-
 }

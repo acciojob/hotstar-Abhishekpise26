@@ -2,7 +2,6 @@ package com.driver.controllers;
 
 
 import com.driver.EntryDto.WebSeriesEntryDto;
-import com.driver.model.WebSeries;
 import com.driver.services.WebSeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

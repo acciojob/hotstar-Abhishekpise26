@@ -1,11 +1,6 @@
 package com.driver.EntryDto;
 
-import com.driver.model.ProductionHouse;
 import com.driver.model.SubscriptionType;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 public class WebSeriesEntryDto {
 
